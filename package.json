@@ -1,0 +1,9 @@
+{
+  "name": "nodeEventEmitter",
+  "devDependencies": {
+    "jasmine-node": "latest"
+  },
+  "scripts": {
+    "test": "jasmine"
+  }
+}
