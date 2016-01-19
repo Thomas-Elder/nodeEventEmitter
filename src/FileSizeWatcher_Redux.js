@@ -1,29 +1,25 @@
 /**
- * FileSizeWatcher.js
+ * FileSizeWatcher_Redux.js
+ * 
+ * A slightly different implementation of the FileSizeWatcher module, where we
+ * inherit the emit event functionality from events.EventEmitter.
  *
- * A nodejs module which watches a given file and emits events when the file
- * size changes.
- *
- * Events: 'error'
- *         'grew'
- *         'shrank'
+ * This is done by using a util function 'inherits'.
  */
 
 'use strict';
 
 var fs = require('fs');
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
 
-var FileSizeWatcher = function(path){
-
-  // Create self reference so we can refer to this 'this', in other objects.
+var FileSizeWatcher_Redux = function(path){
   var self = this;
-
-  self.callbacks = {};
 
   // Error if file has incorrect extension.
   if(/^.+\.test/.test(path) === false) {
     process.nextTick(function(){
-      self.callbacks.error('Path is not of extenstion ".test".');
+      self.emit('error', 'Path is not of extenstion ".test".');
     });
 
     return;
@@ -42,27 +38,25 @@ var FileSizeWatcher = function(path){
       fs.stat(path, function(err, stats){
 
         if(stats.size < self.lastFileSize){
-          self.callbacks.shrank(self.lastFileSize - stats.size);
+          self.emit('shrank', self.lastFileSize - stats.size);
           self.lastFileSize = stats.size;
         }
 
         if(stats.size > self.lastFileSize){
-          self.callbacks.grew(stats.size - self.lastFileSize);
+          self.emit('grew', stats.size - self.lastFileSize);
           self.lastFileSize = stats.size;
         }
     });
   }, 1000);
-    
+
 };
 
-// Register a callback function with the watcher.
-FileSizeWatcher.prototype.on = function(eventType, callback) {
-  this.callbacks[eventType] = callback;
-};
+//
+util.inherits(FileSizeWatcher_Redux, EventEmitter);
 
 // Stop watching the file.
-FileSizeWatcher.prototype.stop = function(){
+FileSizeWatcher_Redux.prototype.stop = function(){
   clearInterval(this.interval);
 };
 
-module.exports = FileSizeWatcher;
+module.exports = FileSizeWatcher_Redux;
