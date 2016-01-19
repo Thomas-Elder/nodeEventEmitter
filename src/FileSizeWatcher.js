@@ -12,7 +12,7 @@ var FileSizeWatcher = function(path){
   // Error if file has incorrect extension.
   if(/^.+\.test/.test(path) === false) {
     process.nextTick(function(){
-      self.callbacks['error']('Path is not of extenstion ".test".');
+      self.callbacks.error('Path is not of extenstion ".test".');
     });
 
     return;
@@ -31,12 +31,12 @@ var FileSizeWatcher = function(path){
       fs.stat(path, function(err, stats){
 
         if(stats.size < self.lastFileSize){
-          self.callbacks['shrank'](self.lastFileSize - stats.size);
+          self.callbacks.shrank(self.lastFileSize - stats.size);
           self.lastFileSize = stats.size;
         }
 
         if(stats.size > self.lastFileSize){
-          self.callbacks['grew'](stats.size - self.lastFileSize);
+          self.callbacks.grew(stats.size - self.lastFileSize);
           self.lastFileSize = stats.size;
         }
     });
