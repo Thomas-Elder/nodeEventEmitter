@@ -40,6 +40,7 @@ describe('FileSizeWatcher',
 
         var path = '..\\FileSizeWatcher.test';
 
+        // Recreate the file as empty
         exec('rm -force ' + path + ' ; touch ' + path,
           function(){
 
