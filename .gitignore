@@ -1,3 +1,4 @@
 node_modules/
 .jshintrc
 doc/assets/
+docs/public/

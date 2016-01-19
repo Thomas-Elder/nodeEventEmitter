@@ -1,9 +1,13 @@
 {
   "name": "nodeEventEmitter",
   "devDependencies": {
-    "jasmine-node": "latest"
+    "jasmine-node": "latest",
+    "docco":""
   },
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "docs": "npm run doc-src && npm run doc-spec",
+    "doc-src": "docco src/FileSizeWatcher_Redux.js src/FileSizeWatcher.js",
+    "doc-spec": "docco spec/FileSizeWatcherSpec.js spec/FileSizeWatcher_ReduxSpec.js"
   }
 }

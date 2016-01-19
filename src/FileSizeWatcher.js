@@ -1,13 +1,14 @@
-/**
- * FileSizeWatcher.js
- *
- * A nodejs module which watches a given file and emits events when the file
- * size changes.
- *
- * Events: 'error'
- *         'grew'
- *         'shrank'
- */
+//
+// ##FileSizeWatcher.js
+//
+// A nodejs module which watches a given file and emits events when the file
+// size changes.
+//
+// Events:
+// * 'error'
+// * 'grew'
+// * 'shrank'
+//
 
 'use strict';
 
